@@ -19,7 +19,7 @@ tf.set_random_seed(0)
 
 
 # data
-mnist = read_data_sets("../MNIST-data/", one_hot=True)
+mnist = read_data_sets("../MNIST_data/", one_hot=True)
 print("MNIST data ready for analysis!\n")  # get data ready
 batch_size = 100  # how many imgs in each batch?
 
@@ -96,8 +96,8 @@ init = tf.global_variables_initializer()  # note the version problem
 
 
 # evaluation
-# arg_max : the entry with the highest probability is our prediction
-if_prediction_correct = tf.equal(tf.arg_max(y, 1), tf.arg_max(y_, 1)) # T,F,T...
+# argmax : the entry with the highest probability is our prediction
+if_prediction_correct = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))   # T,F,T...
 accuracy = tf.reduce_mean(tf.cast(if_prediction_correct, tf.float32)) # 1,0,1...
 
 
@@ -105,7 +105,7 @@ with tf.Session() as sess:
     sess.run(init)
 
     # training
-    for i in range(10000):  # train_step_number
+    for i in range(int(1e5)):  # train_step_number
         # learning rate decay
         lerate = min_learning_rate + \
                 (max_learning_rate-min_learning_rate) * math.exp(-i/decay_speed)
